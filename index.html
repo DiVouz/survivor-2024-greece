@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Survivor 2024 | Greece</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+
+        <link type="image/x-icon" rel="icon" href="/assets/images/logo.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        <link type="text/css" rel="stylesheet" href="style.css">
+
+        <script type="text/javascript" src="js/api.js" defer></script>
+        <script type="text/javascript" src="js/Player.js" defer></script>
+        <script type="text/javascript" src="js/Match.js" defer></script>
+        <script type="text/javascript" src="js/Voted.js" defer></script>
+        <script type="text/javascript" src="js/main.js" defer></script>
+    </head>
+    <body>
+        <div class="flex-row section section-navbar">
+            <div class="navbar-year">2024</div>
+            <div class="navbar-logo"><img src="assets/images/logo.png" /></div>
+            <div class="flex-row flex-half-gap navbar-country"><img src="assets/images/country.png" /> GREECE</div>
+        </div>
+
+        <div class="flex-column section section-teams">
+            <div class="teams-background"></div>
+            <div class="flex-column">
+                <div class="flex-column">
+                    <div class="flex-row flex-wrap" id="team-blue-men">
+                    </div>
+                    <div class="flex-row flex-wrap" id="team-blue-women">
+                    </div>
+                </div>
+                <div class="teams-versus">
+                    <img src="assets/images/vs.png" />
+                </div>
+                <div class="flex-column">
+                    <div class="flex-row flex-wrap" id="team-red-men">
+                    </div>
+                    <div class="flex-row flex-wrap" id="team-red-women">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-column section section-matches">
+            <div class="section-title">Στατιστικά Παιχνιδίων</div>
+            <div class="grid matches-container">
+                <div class="flex-column match-card" data-match-type="total">
+                    <div>Σύνολο ομαδικών παιχνιδιών</div>
+                    <div class="match-card-amount">
+                        <div class="match-card-amount-total">0</div>
+                        <div class="match-card-amount-teams"><span class="match-card-blue-amount">0</span> / <span class="match-card-red-amount">0</span></div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-card" data-match-type="team-immunity">
+                    <div>Παιχνίδια ασυλίας</div>
+                    <div class="match-card-amount">
+                        <div class="match-card-amount-total">0</div>
+                        <div class="match-card-amount-teams"><span class="match-card-blue-amount">0</span> / <span class="match-card-red-amount">0</span></div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-card" data-match-type="food">
+                    <div>Παιχνίδια με έπαθλο φαγητού</div>
+                    <div class="match-card-amount">
+                        <div class="match-card-amount-total">0</div>
+                        <div class="match-card-amount-teams"><span class="match-card-blue-amount">0</span> / <span class="match-card-red-amount">0</span></div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-card" data-match-type="communication">
+                    <div>Παιχνίδια με έπαθλο επικοινωνίας</div>
+                    <div class="match-card-amount">
+                        <div class="match-card-amount-total">0</div>
+                        <div class="match-card-amount-teams"><span class="match-card-blue-amount">0</span> / <span class="match-card-red-amount">0</span></div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-card" data-match-type="self-stay">
+                    <div>Παιχνίδια μονομαχίας</div>
+                    <div class="match-card-amount">
+                        <div class="match-card-amount-total">0</div>
+                        <div class="match-card-amount-teams"><span class="match-card-blue-amount">0</span> / <span class="match-card-red-amount">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section section-top3">
+            <div class="top3-background"></div>
+
+            <div class="section-title">Καλύτεροι 3 παίκτες</div>
+
+            <div class="flex-row flex-wrap top3-container">
+                <div class="flex-column top3-rank1">
+                    <div class="top3-player-rank">#1</div>
+                    <div class="flex-column top3-player">
+                        <div class="top3-player-image"></div>
+
+                        <div class="top3-player-info">
+                            <div class="flex-row top3-player-stats">
+                                <div class="top3-player-percent"><span>0</span>%</div>
+                                <div class="top3-player-win-lose"><span class="top3-player-win">0</span> / <span class="top3-player-lose">0</span></div>
+                            </div>
+                            <div class="top3-player-name"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column top3-rank2">
+                    <div class="top3-player-rank">#2</div>
+                    <div class="flex-column top3-player">
+                        <div class="top3-player-image"></div>
+
+                        <div class="top3-player-info">
+                            <div class="flex-row top3-player-stats">
+                                <div class="top3-player-percent"><span>0</span>%</div>
+                                <div class="top3-player-win-lose"><span class="top3-player-win">0</span> / <span class="top3-player-lose">0</span></div>
+                            </div>
+                            <div class="top3-player-name"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column top3-rank3">
+                    <div class="top3-player-rank">#3</div>
+                    <div class="flex-column top3-player">
+                        <div class="top3-player-image"></div>
+
+                        <div class="top3-player-info">
+                            <div class="flex-row top3-player-stats">
+                                <div class="top3-player-percent"><span>0</span>%</div>
+                                <div class="top3-player-win-lose"><span class="top3-player-win">0</span> / <span class="top3-player-lose">0</span></div>
+                            </div>
+                            <div class="top3-player-name"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section section-voted">
+            <div class="section-title">Υποψηφιότητες</div>
+
+            <div class="flex-column voted-container">
+            </div>
+        </div>
+
+        <div class="section section-footer">
+
+        </div>
+    </body>
+</html>
