@@ -2,13 +2,14 @@ class Voted {
     static HTML_TEMPLATE_WEEK = `
         <div id="{ID}">
             <div class="voted-title">Εβδομαδα {WEEK_NUMBER}</div>
+            
             <div class="flex-row flex-wrap voted-players-container">
             </div>
         </div>
     `;
 
     static HTML_TEMPLATE_PLAYER = `
-        <div class="voted-player" data-lost="{LOST}" id="{ID}">
+        <div class="voted-player" data-lost="{LOST}" id="{ID}" onclick="gotoPlayerPage('{NAME}')">
             <div class="voted-player-image"></div>
         </div>
     `;
@@ -52,6 +53,7 @@ class Voted {
     get player_template() {
         return Voted.HTML_TEMPLATE_PLAYER
                         .replace(/{ID}/g, this.player_element_id)
-                        .replace(/{LOST}/g, this.#lost);
+                        .replace(/{LOST}/g, this.#lost)
+                        .replace(/{NAME}/g, this.#player);
     }
 }

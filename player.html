@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Survivor 2024 | Greece</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+
+        <link type="image/x-icon" rel="icon" href="/assets/images/logo.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        <link type="text/css" rel="stylesheet" href="css/player.css">
+        <link type="text/css" rel="stylesheet" href="css/section-match-stats.css">
+
+        <script type="text/javascript" src="js/api.js" defer></script>
+        <script type="text/javascript" src="js/main.js" defer></script>
+        <script type="text/javascript" src="js/Player.js" defer></script>
+        <script type="text/javascript" src="js/Match.js" defer></script>
+        <script type="text/javascript" src="js/Voted.js" defer></script>
+        <script type="text/javascript" src="js/player-page.js" defer></script>
+    </head>
+    <body data-team="" data-active="true">
+        <div class="flex-row section section-navbar section-background-color">
+            <div class="navbar-logo">
+                <img src="assets/images/logo.png" />
+            </div>
+            
+            <div class="navbar-side">
+                <div class="flex-row flex-half-gap navbar-country">
+                    <img src="assets/images/country.png" /> GREECE
+                </div>
+                <div class="navbar-year">2024</div>
+            </div>
+        </div>
+
+        <div class="flex-row section section-player-header">
+            <div class="flex-row flex-wrap section-player-header-container">
+                <div class="player-header-image">
+                    <div class="player-header-image-background" id="player-header-image-background"></div>
+                </div>
+
+                <div class="flex-column player-header-info">
+                    <div class="player-header-info-name" id="player-header-info-name"></div>
+
+                    <div class="flex-column flex-no-gap player-header-info-extra">
+                        <div class="player-header-info-extra-age"><span id="player-header-info-extra-age"></span> ετών</div>
+                        <div class="player-header-info-extra-job" id="player-header-info-extra-job"></div>
+                    </div>
+                
+                    <div class="player-header-team"><span id="player-header-team"></span> Ομάδα</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-row flex-wrap section section-general-stats section-background-color">
+            <div class="flex-column general-stats">
+                <div class="section-title">Κατάταξη</div>
+                <div class="flex-row flex-no-gap general-stats-container">#<span id="general-stats-rank">0</span></div>
+            </div>
+            <div class="flex-column general-stats">
+                <div class="section-title">Υποψηφιότητες</div>
+                <div class="flex-row general-stats-container" id="general-stats-voted">0</div>
+            </div>
+        </div>
+
+        <div class="flex-column section section-match-stats section-background-color">
+            <div class="section-title">Στατιστικά Παιχνιδίων</div>
+            <div class="grid match-stats-container">
+                <div class="flex-column match-stat-card" data-match-type="total">
+                    <div>Σύνολο ομαδικών παιχνιδιών</div>
+                    <div class="match-stat-card-amount">
+                        <div class="match-stat-card-amount-total">0</div>
+                        <div class="flex-row">
+                            <div class="flex-row flex-no-gap match-stat-card-amount-teams-percent"><span>0</span>%</div>
+                            <div class="match-stat-card-amount-teams"><span class="match-stat-card-blue-amount">0</span> / <span class="match-stat-card-red-amount">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-stat-card" data-match-type="team-immunity">
+                    <div>Παιχνίδια ασυλίας</div>
+                    <div class="match-stat-card-amount">
+                        <div class="match-stat-card-amount-total">0</div>
+                        <div class="flex-row">
+                            <div class="flex-row flex-no-gap match-stat-card-amount-teams-percent"><span>0</span>%</div>
+                            <div class="match-stat-card-amount-teams"><span class="match-stat-card-blue-amount">0</span> / <span class="match-stat-card-red-amount">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-stat-card" data-match-type="food">
+                    <div>Παιχνίδια με έπαθλο φαγητού</div>
+                    <div class="match-stat-card-amount">
+                        <div class="match-stat-card-amount-total">0</div>
+                        <div class="flex-row">
+                            <div class="flex-row flex-no-gap match-stat-card-amount-teams-percent"><span>0</span>%</div>
+                            <div class="match-stat-card-amount-teams"><span class="match-stat-card-blue-amount">0</span> / <span class="match-stat-card-red-amount">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-stat-card" data-match-type="communication">
+                    <div>Παιχνίδια με έπαθλο επικοινωνίας</div>
+                    <div class="match-stat-card-amount">
+                        <div class="match-stat-card-amount-total">0</div>
+                        <div class="flex-row">
+                            <div class="flex-row flex-no-gap match-stat-card-amount-teams-percent"><span>0</span>%</div>
+                            <div class="match-stat-card-amount-teams"><span class="match-stat-card-blue-amount">0</span> / <span class="match-stat-card-red-amount">0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-column match-stat-card" data-match-type="self-stay">
+                    <div>Παιχνίδια μονομαχίας</div>
+                    <div class="match-stat-card-amount">
+                        <div class="match-stat-card-amount-total">0</div>
+                        <div class="flex-row">
+                            <div class="flex-row flex-no-gap match-stat-card-amount-teams-percent"><span>0</span>%</div>
+                            <div class="match-stat-card-amount-teams"><span class="match-stat-card-blue-amount">0</span> / <span class="match-stat-card-red-amount">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-column section section-match-history">
+
+        </div>
+
+        <div class="flex-row flex-wrap section section-footer section-background-color">
+            <div>
+                <div>This website is fan-made and not affiliated with <a href="https://www.skai.gr/" target="_blank">Skai.gr</a> or Survivor.</div>
+                <div>All images and trademarks are the property of their respective owners.</div>
+            </div>
+            <div>
+                <div>Developed by <a href="https://divouz.github.io/DiVouz/" target="_blank">DiVouz</a></div>
+                <div>Contact: <a href="mailto:divouz@outlook.com?subject=Survivor Website">divouz@outlook.com</a></div>
+            </div>
+        </div>
+    </body>
+</html>

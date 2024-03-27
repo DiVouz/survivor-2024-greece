@@ -1,0 +1,78 @@
+/* MATCH STATS */
+
+.section-match-stats {
+    justify-content: flex-start;
+
+    height: 100%;
+}
+
+.match-stats-container {
+    align-items: stretch;
+    justify-content: center;
+    align-content: stretch;
+    justify-items: stretch;
+    grid-template-areas:
+        "total total"
+        "team-immunity self-stay"
+        "food communication";
+
+    height: 100%;
+}
+
+.match-stat-card {
+    align-items: stretch;
+    justify-content: space-between;
+
+    padding: var(--gap);
+
+    background-color: var(--color-main-1);
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--box-shadow);
+
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.match-stat-card[data-match-type="total"] { grid-area: total; }
+.match-stat-card[data-match-type="team-immunity"] { grid-area: team-immunity; }
+.match-stat-card[data-match-type="food"] { grid-area: food; }
+.match-stat-card[data-match-type="communication"] { grid-area: communication; }
+.match-stat-card[data-match-type="self-stay"] { grid-area: self-stay; }
+
+.match-stat-card-amount {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.match-stat-card-amount-teams {
+    font-size: 0.8em;
+    text-wrap: nowrap;
+}
+
+.match-stat-card-blue-amount {
+    color: var(--color-blue);
+}
+
+.match-stat-card-red-amount {
+    color: var(--color-red);
+}
+
+.match-stat-card-amount-teams-percent {
+    width: 6rem;
+    height: 6rem;
+
+    text-align: center;
+
+    border-radius: 50%;
+
+    font-size: 0.5em;
+
+    background:
+        radial-gradient(closest-side, var(--color-main-1) 75%, transparent 78% 100%),
+        conic-gradient(
+            var(--color-blue) 50%,
+            var(--color-red) 0
+        );
+}

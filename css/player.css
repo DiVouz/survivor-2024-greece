@@ -1,0 +1,90 @@
+:root {
+    --team-color: var(--color-text);
+}
+
+body[data-team="blue"] {
+    --team-color: var(--color-blue);
+}
+
+body[data-team="red"] {
+    --team-color: var(--color-red);
+}
+
+/* PLAYER HEADER */
+
+.section-player-header-container {
+    align-items: stretch;
+}
+
+.player-header-image {
+    position: relative;
+
+    width: 15rem;
+    height: 15rem;
+
+    border: var(--border-size) solid var(--team-color);
+    border-radius: var(--border-radius);
+}
+
+body[data-active="false"] .player-header-image {
+    filter: grayscale(100%);
+}
+
+.player-header-image-background {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: calc(var(--border-radius) - var(--border-size));
+
+    background-position: center top;
+    background-size: 300%;
+    background-repeat: no-repeat;
+}
+
+.player-header-info {
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding: var(--gap);
+}
+
+.player-header-info-name {
+    font-size: 2.5em;
+}
+
+.player-header-info-extra {
+    align-items: flex-start;
+
+    font-size: 1.5em;
+}
+
+.player-header-team {
+    font-size: 1.5em;
+    color: var(--team-color);
+}
+
+/* STATS */
+
+.section-general-stats {
+    
+}
+
+.general-stats {
+    width: 20rem;
+}
+
+.general-stats-container {
+    width: 10rem;
+    height: 10rem;
+    
+    background-color: var(--team-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+
+    font-size: 5em;
+}

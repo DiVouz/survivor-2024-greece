@@ -1,0 +1,176 @@
+/* TEAMS */
+
+.section-teams {
+    min-height: calc(100svh - var(--navbar-height));
+}
+
+.teams-versus > img {
+    height: 3rem;
+    width: auto;
+}
+
+.player {
+    position: relative;
+
+    width: 20vw;
+    max-width: 10rem;
+
+    height: 20vw;
+    max-height: 10rem;
+
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--box-shadow);
+
+    cursor: pointer;
+}
+
+.player[data-active="false"] {
+    filter: grayscale(100%);
+}
+
+.player[data-team="blue"] {
+    border: var(--border-size) solid var(--color-blue);
+}
+
+.player[data-team="red"] {
+    border: var(--border-size) solid var(--color-red);
+}
+
+.player-image {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: calc(var(--border-radius) - var(--border-size));
+
+    background-position: center top;
+    background-size: 300%;
+    background-repeat: no-repeat;
+}
+
+/* TOP3 */
+
+.top3-container {
+    align-items: flex-end;
+}
+
+.top3-player-rank {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.top3-player {
+    position: relative;
+
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 0;
+
+    width: 25rem;
+
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--box-shadow);
+
+    font-size: 2em;
+    text-align: center;
+
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+.top3-rank1 .top3-player {
+    height: 35rem;
+}
+
+.top3-rank2 .top3-player {
+    height: 30rem;
+}
+
+.top3-rank3 .top3-player {
+    height: 25rem;
+}
+
+.top3-player-info {
+    padding: calc(var(--gap) * 2) var(--gap) var(--gap) var(--gap);
+
+    background-color: var(--color-main-0);
+    background: linear-gradient(0deg,
+                    var(--color-main-0) 60%,
+                    rgba(0,0,0,0) 100%);
+}
+
+.top3-player-stats {
+    font-size: 0.8em;
+}
+
+.top3-player-image {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: var(--border-radius);
+
+    background-position: center top;
+    background-size: 300%;
+    background-repeat: no-repeat;
+
+    z-index: -1;
+}
+
+.top3-player-win {
+    color: var(--color-blue);
+}
+
+.top3-player-lose {
+    color: var(--color-red);
+}
+
+/* VOTED */
+
+.voted-title {
+    font-size: 2em;
+}
+
+.voted-player {
+    position: relative;
+
+    width: 8rem;
+    height: 8rem;
+
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--box-shadow);
+
+    cursor: pointer;
+}
+
+.voted-player[data-lost="true"] {
+    filter: grayscale(100%);
+}
+
+.voted-player-image {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    
+    border-radius: calc(var(--border-radius) - var(--border-size));
+
+    background-position: center top;
+    background-size: 300%;
+    background-repeat: no-repeat;
+}

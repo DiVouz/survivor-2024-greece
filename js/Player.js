@@ -1,12 +1,14 @@
 class Player {
     static HTML_TEMPLATE = `
-        <div class="player" id="{ID}" data-team="{TEAM}" data-active="true">
+        <div class="player" id="{ID}" data-team="{TEAM}" data-active="{ACTIVE}" onclick="gotoPlayerPage('{NAME}');">
             <div class="player-image"></div>
         </div>
     `;
 
     #name;
     #gender;
+    #birth_year;
+    #job;
     #team;
     #active;
     #image;
@@ -16,9 +18,11 @@ class Player {
 
     #elo;
 
-    constructor(name, gender, team, active, image) {
+    constructor(name, gender, birth_year, job, team, active, image) {
         this.#name = name.replace(/\r/g, '').replace(/  +/g, ' ');
         this.#gender = gender;
+        this.#birth_year = birth_year;
+        this.#job = job;
         this.#team = team;
         this.#active = active;
         this.#image = image;
@@ -38,6 +42,14 @@ class Player {
 
     get gender() {
         return this.#gender;
+    }
+
+    get birth_year() {
+        return this.#birth_year;
+    }
+
+    get job() {
+        return this.#job;
     }
 
     get team() {
@@ -71,7 +83,9 @@ class Player {
     get template() {
         return Player.HTML_TEMPLATE
                         .replace(/{ID}/g, this.element_id)
-                        .replace(/{TEAM}/g, this.team.toLowerCase());
+                        .replace(/{TEAM}/g, this.team.toLowerCase())
+                        .replace(/{ACTIVE}/g, this.active ? 'true' : 'false')
+                        .replace(/{NAME}/g, this.#name);
     }
 
     addWin(mateCurrentElo, enemy1CurrentElo, enemy2CurrentElo) {

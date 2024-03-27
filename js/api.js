@@ -29,13 +29,15 @@ async function getAllPlayers() {
         const player = {
             name: row[0] != null ? row[0].v : null,
             gender: row[1] != null ? row[1].v : null,
-            team: row[2] != null ? row[2].v : null,
-            active: row[3] != null ? row[3].v : null,
-            image: row[4] != null ? row[4].v : null
+            birth_year: row[2] != null ? row[2].v : null,
+            job: row[3] != null ? row[3].v : null,
+            team: row[4] != null ? row[4].v : null,
+            active: row[5] != null ? row[5].v : null,
+            image: row[6] != null ? row[6].v : null
         };
         
         if (player.name != null) {
-            players.push(new Player(player.name, player.gender, player.team, player.active, player.image));
+            players.push(new Player(player.name, player.gender, player.birth_year, player.job, player.team, player.active, player.image));
         }
     };
 
