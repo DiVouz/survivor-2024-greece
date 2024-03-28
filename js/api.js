@@ -96,7 +96,10 @@ async function getAllVoted() {
         };
         
         if (vote.player != null) {
-            voted.push(new Voted(vote.week, vote.player, vote.lost));
+            const player = Player.players.find(player => player.name == vote.player);
+            if (player != null) {
+                voted.push(new Voted(vote.week, player, vote.lost));
+            }
         }
     };
 

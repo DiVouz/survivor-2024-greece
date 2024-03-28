@@ -1,9 +1,14 @@
 class Player {
     static HTML_TEMPLATE = `
-        <div class="player" id="{ID}" data-team="{TEAM}" data-active="{ACTIVE}" onclick="gotoPlayerPage('{NAME}');">
+        <div class="player" id="{ID}" data-team="{TEAM}" data-active="{ACTIVE}" onclick="gotoPlayerPage('player.html', {name: '{NAME}'});">
             <div class="player-image"></div>
         </div>
     `;
+
+    static currentId = 0;
+    static players = [];
+
+    #id;
 
     #name;
     #gender;
@@ -18,7 +23,9 @@ class Player {
 
     #elo;
 
-    constructor(name, gender, birth_year, job, team, active, image) {
+    constructor(name, gender, birth_year, job, team, active, image, addToList = true) {
+        this.#id = Player.currentId++;
+
         this.#name = name.replace(/\r/g, '').replace(/  +/g, ' ');
         this.#gender = gender;
         this.#birth_year = birth_year;
@@ -30,6 +37,12 @@ class Player {
         this.#wins = 0;
         this.#losses = 0;
         this.#elo = 1000;
+
+        if (addToList) Player.players.push(this);
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get name() {
@@ -77,7 +90,7 @@ class Player {
     }
 
     get element_id() {
-        return `player-${this.#name.toLowerCase().replace(/ /g, '-')}`
+        return `player-${this.#name.toLowerCase().replace(/ /g, '-')}-${this.#id}`
     }
 
     get template() {

@@ -9,7 +9,7 @@ class Voted {
     `;
 
     static HTML_TEMPLATE_PLAYER = `
-        <div class="voted-player" data-lost="{LOST}" id="{ID}" onclick="gotoPlayerPage('{NAME}')">
+        <div class="voted-player" data-lost="{LOST}" id="{ID}" onclick="{ON_CLICK}">
             <div class="voted-player-image"></div>
         </div>
     `;
@@ -20,7 +20,7 @@ class Voted {
 
     constructor(week, player, lost) {
         this.#week = week;
-        this.#player = player.replace(/\r/g, '').replace(/  +/g, ' ');
+        this.#player = player;
         this.#lost = lost;
     }
     
@@ -47,13 +47,18 @@ class Voted {
     }
 
     get player_element_id() {
-        return `week-${this.#week}-player-${this.#player.toLowerCase().replace(/ /g, '-')}`;
+        return `week-${this.#week}-player-${this.#player.name.toLowerCase().replace(/ /g, '-')}-${this.#player.id}`;
     }
 
     get player_template() {
+        let onClickString = '';
+        if (this.#player.name.toLowerCase() !== 'unknown') {
+            onClickString = `gotoPlayerPage('player.html', {name: '${this.#player.name}'});`;
+        }
+
         return Voted.HTML_TEMPLATE_PLAYER
                         .replace(/{ID}/g, this.player_element_id)
                         .replace(/{LOST}/g, this.#lost)
-                        .replace(/{NAME}/g, this.#player);
+                        .replace(/{ON_CLICK}/g, onClickString);
     }
 }

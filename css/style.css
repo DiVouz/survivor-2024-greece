@@ -175,6 +175,8 @@ body {
 
 .navbar-logo {
     height: 100%;
+
+    cursor: pointer;
 }
 
 .navbar-logo img {

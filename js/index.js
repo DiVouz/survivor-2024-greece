@@ -165,7 +165,7 @@ function parseMatchesData(players, matches) {
             const player = players[i];
             
             const rankXplayer_element = document.querySelector(`.section-top3 .top3-rank${i + 1}`);
-            rankXplayer_element.querySelector('.top3-player').addEventListener('click', gotoPlayerPage.bind(null, player.name));
+            rankXplayer_element.querySelector('.top3-player').addEventListener('click', gotoPlayerPage.bind(null, 'player.html', {name: player.name}));
             rankXplayer_element.querySelector('.top3-player-image').style.backgroundImage = `url(${player.image})`;
             rankXplayer_element.querySelector('.top3-player-percent > span').innerHTML = Math.round(player.winrate);
             rankXplayer_element.querySelector('.top3-player-win').innerHTML = player.wins;
@@ -197,12 +197,6 @@ function parseVotedData(players, voted) {
             if (vote.player == null) {
                 continue;
             }
-
-            const player = players.find(player => player.name === vote.player);
-            if (!player) {
-                console.error(`Player ${vote.player} not found in voted data.`);
-                continue;
-            }
         }
     }
 
@@ -219,14 +213,13 @@ function parseVotedData(players, voted) {
         const weekContainer_element = votedContainer_element.querySelector(`#${week[0].week_element_id} .voted-players-container`);
 
         for (let j = 0; j < 4; j++) {
-            const vote = (j < week.length) ? week[j] : new Voted(weekNumber, 'unknown', false);
+            const vote = (j < week.length) ? week[j] : new Voted(weekNumber, new Player('Unknown', null, null, null, null, null, null, false), false);
 
             weekContainer_element.insertAdjacentHTML('beforeend', vote.player_template);
             const playerImage_element = weekContainer_element.querySelector(`#${vote.player_element_id} .voted-player-image`);
             
-            const player = players.find((player) => player.name === vote.player);
-            if (player) {
-                playerImage_element.style.backgroundImage = `url(${player.image})`;
+            if (vote.player != null && vote.player.image != null) {
+                playerImage_element.style.backgroundImage = `url(${vote.player.image})`;
             } else {
                 playerImage_element.style.backgroundColor = 'white';
                 playerImage_element.style.backgroundImage = `url(assets/images/question-mark.png)`;
