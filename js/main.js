@@ -4,9 +4,9 @@ function gotoPlayerPage(name) {
         return;
     }
 
-    const url = new URL(window.location.href);
-    url.pathname = '/player.html';
-    url.searchParams.set('name', name);
+    const currentUrl = new URL(window.location.href);
+    currentUrl.pathname = currentUrl.pathname.substring(0, currentUrl.pathname.lastIndexOf('/')) + "/player.html";
+    currentUrl.searchParams.set('name', name);
 
-    window.location.href = url.href;
+    window.location.href = currentUrl;
 }
