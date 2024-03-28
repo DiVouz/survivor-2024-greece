@@ -3,7 +3,7 @@ function getPlayerNameFromUrl() {
     const playerName = url.searchParams.get('name');
 
     if (playerName === null) {
-        window.location.href = '/';
+        gotoPlayerPage('index.html');
         return null;
     }
 
@@ -34,7 +34,7 @@ function fetchAllData(currentPlayerName) {
     getAllPlayers().then((players) => {
         const currentPlayer = players.find((player) => player.name === currentPlayerName);
         if (currentPlayer === undefined) {
-            window.location.href = '/';
+            gotoPlayerPage('index.html');
             return;
         }
 
@@ -245,7 +245,7 @@ function parseVotedData(currentPlayer, players, voted) {
     let votedTimes = 0;
 
     for (let i = 0; i < voted.length; i++) {
-        if (voted[i].player === currentPlayer.name) {
+        if (voted[i].player.name === currentPlayer.name) {
             votedTimes++;
         }
     }
