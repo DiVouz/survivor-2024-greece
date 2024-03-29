@@ -83,21 +83,21 @@ function parseMatchesData(players, matches) {
             const losePlayer1 = players.find(player => player.name == match[`team${winnerReverce[match.winner - 1]}player1`]);
             const losePlayer2 = players.find(player => player.name == match[`team${winnerReverce[match.winner - 1]}player2`]);
             
-            const winPlayer1elo = winPlayer1 != null ? winPlayer1.elo : 0;
-            const winPlayer2elo = winPlayer2 != null ? winPlayer2.elo : 0;
-            const losePlayer1elo = losePlayer1 != null ? losePlayer1.elo : 0;
-            const losePlayer2elo = losePlayer2 != null ? losePlayer2.elo : 0;
+            const winPlayer1elo = winPlayer1 != null ? winPlayer1.currentElo : 0;
+            const winPlayer2elo = winPlayer2 != null ? winPlayer2.currentElo : 0;
+            const losePlayer1elo = losePlayer1 != null ? losePlayer1.currentElo : 0;
+            const losePlayer2elo = losePlayer2 != null ? losePlayer2.currentElo : 0;
 
-            if (winPlayer1) winPlayer1.addWin(winPlayer2elo, losePlayer1elo, losePlayer2elo);
-            if (winPlayer2) winPlayer2.addWin(winPlayer1elo, losePlayer1elo, losePlayer2elo);
+            if (winPlayer1) winPlayer1.addWin(winPlayer2elo, losePlayer1elo, losePlayer2elo, match);
+            if (winPlayer2) winPlayer2.addWin(winPlayer1elo, losePlayer1elo, losePlayer2elo, match);
 
-            if (losePlayer1) losePlayer1.addLose(losePlayer2elo, winPlayer1elo, winPlayer2elo);
-            if (losePlayer2) losePlayer2.addLose(losePlayer1elo, winPlayer1elo, winPlayer2elo);
+            if (losePlayer1) losePlayer1.addLose(losePlayer2elo, winPlayer1elo, winPlayer2elo, match);
+            if (losePlayer2) losePlayer2.addLose(losePlayer1elo, winPlayer1elo, winPlayer2elo, match);
         }
     }
 
     // Sort players by elo
-    players.sort((a, b) => b.elo - a.elo);
+    players.sort((a, b) => b.currentElo - a.currentElo);
 
     // Set players to section-teams
     {
@@ -171,6 +171,201 @@ function parseMatchesData(players, matches) {
             rankXplayer_element.querySelector('.top3-player-win').innerHTML = player.wins;
             rankXplayer_element.querySelector('.top3-player-lose').innerHTML = player.losses;
             rankXplayer_element.querySelector('.top3-player-name').innerHTML = player.name;
+        }
+    }
+
+    // Chart elo
+    {
+        const chartGridColor = getComputedStyle(document.body).getPropertyValue('--chart-grid-color');
+        const chartScaleLabelColor = getComputedStyle(document.body).getPropertyValue('--chart-scale-label-color');
+        const chartScaleTicksColor = getComputedStyle(document.body).getPropertyValue('--chart-scale-ticks-color');
+
+        const teamBlueColor = getComputedStyle(document.body).getPropertyValue('--color-blue');
+        const teamRedColor = getComputedStyle(document.body).getPropertyValue('--color-red');
+
+        const canvas_elo_per_player = document.querySelector('#chart-elo-per-player');
+        const chart_elo_per_player = new Chart(canvas_elo_per_player, {
+            type: 'bar',
+            data: {
+                labels: players.map((player) => player.name).filter((value, index, self) => players[index].active),
+                datasets: [{
+                    label: 'ELO',
+                    data: players.map((player) => player.currentElo),
+                    backgroundColor: players.map((player) => player.uniqueColor)
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'ELO',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Παίχτες',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            },
+            plugins: []
+        });
+
+        const canvas_elo_per_player_per_match = document.querySelector('#chart-elo-per-player-per-match');
+        const chart_elo_per_player_per_match = new Chart(canvas_elo_per_player_per_match, {
+            type: 'line',
+            data: {
+                labels: matches.map((match) => match.episode.number).filter((value, index, self) => self.indexOf(value) === index),
+                datasets: players.map((player) => {
+                    const eloPerEpisode = [];
+                    for (let i = 0; i < player.eloHistory.length; i++) {
+                        const eloHistory = player.eloHistory[i];
+                        const match = eloHistory.match;
+                        
+                        eloPerEpisode[match.episode.number] = eloPerEpisode[match.episode.number] || {};
+                        
+                        eloPerEpisode[match.episode.number].episodeNumber = match.episode.number;
+
+                        eloPerEpisode[match.episode.number].count = eloPerEpisode[match.episode.number].count || 0;
+                        eloPerEpisode[match.episode.number].count++;
+
+                        eloPerEpisode[match.episode.number].elo = eloPerEpisode[match.episode.number].elo || 0;
+                        eloPerEpisode[match.episode.number].elo += eloHistory.eloAmount;
+
+                        eloPerEpisode[match.episode.number].avarageElo = eloPerEpisode[match.episode.number].elo / eloPerEpisode[match.episode.number].count;
+                    }
+
+                    const data = [];
+
+                    eloPerEpisode.map((eloEpisode) => {
+                        data.push({
+                            x: eloEpisode.episodeNumber,
+                            y: Math.round(eloEpisode.avarageElo)
+                        });
+                    });
+
+                    return {
+                        type: 'line',
+                        label: player.name,
+                        data: data,
+                        borderWidth: 1,
+                        borderColor: player.uniqueColor,
+                        tension: 0.3,
+                        pointBackgroundColor: player.uniqueColor,
+                        hidden: !player.active
+                    }
+                })
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'ELO',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Επεισόδια',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: chartScaleLabelColor
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                return `${context[0].dataset.label}\nΕπεισόδιο: ${context[0].raw.x}`;
+                            },
+                            label: function(context) {
+                                return `ELO: ${context.raw.y}`;
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: []
+        });
+
+        // Set buttons
+        {
+            const buttonShowAll_element = document.querySelector('#chart-elo-button-all');
+            buttonShowAll_element.addEventListener('click', () => {
+                chart_elo_per_player.data.labels = players.map((player) => player.name),
+                chart_elo_per_player.update();
+
+                chart_elo_per_player_per_match.data.datasets.map((dataset) => {
+                    dataset.hidden = false;
+                });
+                chart_elo_per_player_per_match.update();
+            });
+            
+            const buttonShowActive_element = document.querySelector('#chart-elo-button-active');
+            buttonShowActive_element.addEventListener('click', () => {
+                chart_elo_per_player.data.labels = players.map((player) => player.name).filter((value, index, self) => players[index].active),
+                chart_elo_per_player.update();
+
+                chart_elo_per_player_per_match.data.datasets.map((dataset) => {
+                    const player = players.find((player) => player.name === dataset.label);
+                    dataset.hidden = !player.active;
+                });
+                chart_elo_per_player_per_match.update();
+            });
+            
+            const buttonShowInactive_element = document.querySelector('#chart-elo-button-inactive');
+            buttonShowInactive_element.addEventListener('click', () => {
+                chart_elo_per_player.data.labels = players.map((player) => player.name).filter((value, index, self) => !players[index].active),
+                chart_elo_per_player.update();
+
+                chart_elo_per_player_per_match.data.datasets.map((dataset) => {
+                    const player = players.find((player) => player.name === dataset.label);
+                    dataset.hidden = player.active;
+                });
+                chart_elo_per_player_per_match.update();
+            });
         }
     }
 }

@@ -1,4 +1,8 @@
 class Match {
+    static currentId = 0;
+
+    #id;
+
     #team1name;
     #team2name;
 
@@ -9,16 +13,17 @@ class Match {
     #team2player2;
 
     #winner;
-    
-    #date;
-    #episode;
 
+    #episode;
+    
     #food;
     #communication;
     #teamImmunity;
     #selfStay;
 
-    constructor(team1name, team2name, team1player1, team1player2, team2player1, team2player2, winner, date, episode, food, communication, teamImmunity, selfStay) {
+    constructor(team1name, team2name, team1player1, team1player2, team2player1, team2player2, winner, date, episodeNumber, food, communication, teamImmunity, selfStay) {
+        this.#id = Match.currentId++;
+
         this.#team1name = team1name;
         this.#team2name = team2name;
 
@@ -29,14 +34,17 @@ class Match {
         this.#team2player2 = team2player2 != null ? team2player2.replace(/\r/g, '').replace(/  +/g, ' ') : null;
 
         this.#winner = winner;
-        
-        this.#date = date;
-        this.#episode = episode;
+
+        this.#episode = new Episode(episodeNumber - 1, date, null);
 
         this.#food = food;
         this.#communication = communication;
         this.#teamImmunity = teamImmunity;
         this.#selfStay = selfStay;
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get team1name() {
@@ -65,10 +73,6 @@ class Match {
 
     get winner() {
         return this.#winner;
-    }
-
-    get date() {
-        return this.#date;
     }
 
     get episode() {

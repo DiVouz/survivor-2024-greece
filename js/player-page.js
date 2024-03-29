@@ -107,29 +107,29 @@ function parseMatchesData(currentPlayer, players, matches) {
             const losePlayer1 = players.find(player => player.name == match[`team${winnerReverce[match.winner - 1]}player1`]);
             const losePlayer2 = players.find(player => player.name == match[`team${winnerReverce[match.winner - 1]}player2`]);
             
-            const winPlayer1elo = winPlayer1 != null ? winPlayer1.elo : 0;
-            const winPlayer2elo = winPlayer2 != null ? winPlayer2.elo : 0;
-            const losePlayer1elo = losePlayer1 != null ? losePlayer1.elo : 0;
-            const losePlayer2elo = losePlayer2 != null ? losePlayer2.elo : 0;
+            const winPlayer1elo = winPlayer1 != null ? winPlayer1.currentElo : 0;
+            const winPlayer2elo = winPlayer2 != null ? winPlayer2.currentElo : 0;
+            const losePlayer1elo = losePlayer1 != null ? losePlayer1.currentElo : 0;
+            const losePlayer2elo = losePlayer2 != null ? losePlayer2.currentElo : 0;
 
             if (winPlayer1) {
-                winPlayer1.addWin(winPlayer2elo, losePlayer1elo, losePlayer2elo);
+                winPlayer1.addWin(winPlayer2elo, losePlayer1elo, losePlayer2elo, match);
 
                 if (winPlayer1.name === currentPlayer.name) isCurrentPlayerWinner = true;
             }
             if (winPlayer2) {
-                winPlayer2.addWin(winPlayer1elo, losePlayer1elo, losePlayer2elo);
+                winPlayer2.addWin(winPlayer1elo, losePlayer1elo, losePlayer2elo, match);
 
                 if (winPlayer2.name === currentPlayer.name) isCurrentPlayerWinner = true;
             }
 
             if (losePlayer1) {
-                losePlayer1.addLose(losePlayer2elo, winPlayer1elo, winPlayer2elo);
+                losePlayer1.addLose(losePlayer2elo, winPlayer1elo, winPlayer2elo, match);
 
                 if (losePlayer1.name === currentPlayer.name) isCurrentPlayerLoser = true;
             }
             if (losePlayer2) {
-                losePlayer2.addLose(losePlayer1elo, winPlayer1elo, winPlayer2elo);
+                losePlayer2.addLose(losePlayer1elo, winPlayer1elo, winPlayer2elo, match);
 
                 if (losePlayer2.name === currentPlayer.name) isCurrentPlayerLoser = true;
             }
@@ -174,12 +174,15 @@ function parseMatchesData(currentPlayer, players, matches) {
         }
     }
 
-    players.sort((a, b) => b.elo - a.elo);
+    players.sort((a, b) => b.currentElo - a.currentElo);
 
     // Set player general stats 
     {
         const playerRank_element = document.querySelector('#general-stats-rank');
         playerRank_element.innerHTML = players.findIndex(player => player.name == currentPlayer.name) + 1;
+
+        const playerElo_element = document.querySelector('#general-stats-elo');
+        playerElo_element.innerHTML = Math.round(currentPlayer.currentElo);
     }
 
     // Set player match stats
@@ -238,6 +241,76 @@ function parseMatchesData(currentPlayer, players, matches) {
             sectionMatches_selfStay_amount_element.querySelector('.match-stat-card-amount-teams-percent > span').innerHTML = winPercent;
             sectionMatches_selfStay_amount_element.querySelector('.match-stat-card-amount-teams-percent').style.background = getWinPercentStyleString(winPercent);
         }
+    }
+
+    // Chart elo
+    {
+        const chartGridColor = getComputedStyle(document.body).getPropertyValue('--chart-grid-color');
+        const chartScaleLabelColor = getComputedStyle(document.body).getPropertyValue('--chart-scale-label-color');
+        const chartScaleTicksColor = getComputedStyle(document.body).getPropertyValue('--chart-scale-ticks-color');
+
+        const teamBlueColor = getComputedStyle(document.body).getPropertyValue('--color-blue');
+        const teamRedColor = getComputedStyle(document.body).getPropertyValue('--color-red');
+        const teamColor = (currentPlayer.team === 'Blue') ? teamBlueColor : teamRedColor;
+
+        const canvas_elo = document.querySelector('#chart-elo');
+        const chart_elo = new Chart(canvas_elo, {
+            type: 'line',
+            data: {
+                labels: currentPlayer.eloHistory.map((eloHistory) => eloHistory.episode.number),
+                datasets: [{
+                    label: 'ELO',
+                    data: currentPlayer.eloHistory.map((eloHistory) => Math.round(eloHistory.eloAmount)),
+                    borderColor: teamColor,
+                    pointBackgroundColor: teamColor,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'ELO',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Επεισόδια',
+                            color: chartScaleLabelColor
+                        },
+                        grid: {
+                            color: chartGridColor
+                        },
+                        ticks: {
+                            color: chartScaleTicksColor
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                return `Επεισόδιο: ${context[0].label}`;
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: []
+        });
     }
 }
 

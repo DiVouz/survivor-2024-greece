@@ -18,12 +18,15 @@
         <link type="text/css" rel="stylesheet" href="css/style.css">
         <link type="text/css" rel="stylesheet" href="css/player.css">
         <link type="text/css" rel="stylesheet" href="css/section-match-stats.css">
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
         <script type="text/javascript" src="js/api.js" defer></script>
         <script type="text/javascript" src="js/main.js" defer></script>
         <script type="text/javascript" src="js/Player.js" defer></script>
         <script type="text/javascript" src="js/Match.js" defer></script>
         <script type="text/javascript" src="js/Voted.js" defer></script>
+        <script type="text/javascript" src="js/Episode.js" defer></script>
         <script type="text/javascript" src="js/player-page.js" defer></script>
     </head>
     <body data-team="" data-active="true">
@@ -63,6 +66,10 @@
             <div class="flex-column general-stats">
                 <div class="section-title">Κατάταξη</div>
                 <div class="flex-row flex-no-gap general-stats-container">#<span id="general-stats-rank">0</span></div>
+            </div>
+            <div class="flex-column general-stats">
+                <div class="section-title">Elo</div>
+                <div class="flex-row general-stats-container" id="general-stats-elo">0</div>
             </div>
             <div class="flex-column general-stats">
                 <div class="section-title">Υποψηφιότητες</div>
@@ -130,11 +137,19 @@
             </div>
         </div>
 
-        <div class="flex-column section section-match-history">
+        <div class="flex-column section section-chart-elo">
+            <div class="section-title">Διαγράμματα Στατιστικών</div>
 
+            <div class="chart-elo-container">
+                <canvas id="chart-elo">Your browser does not support the canvas element.</canvas>
+            </div>
         </div>
 
-        <div class="flex-row flex-wrap section section-footer section-background-color">
+        <div class="flex-column section section-match-history section-background-color">
+            <div class="section-title">Ιστορικό Αγώνα</div>
+        </div>
+
+        <div class="flex-row flex-wrap section section-footer">
             <div>
                 <div>This website is fan-made and not affiliated with <a href="https://www.skai.gr/" target="_blank">Skai.gr</a> or Survivor.</div>
                 <div>All images and trademarks are the property of their respective owners.</div>

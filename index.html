@@ -19,11 +19,14 @@
         <link type="text/css" rel="stylesheet" href="css/index.css">
         <link type="text/css" rel="stylesheet" href="css/section-match-stats.css">
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
         <script type="text/javascript" src="js/api.js" defer></script>
         <script type="text/javascript" src="js/main.js" defer></script>
         <script type="text/javascript" src="js/Player.js" defer></script>
         <script type="text/javascript" src="js/Match.js" defer></script>
         <script type="text/javascript" src="js/Voted.js" defer></script>
+        <script type="text/javascript" src="js/Episode.js" defer></script>
         <script type="text/javascript" src="js/index.js" defer></script>
     </head>
     <body>
@@ -160,6 +163,24 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="flex-column section section-chart-elo">
+            <div class="section-title">Διαγράμματα Στατιστικών</div>
+
+            <div class="flex-row flex-wrap chart-elo-buttons">
+                <div id="chart-elo-button-all">Εμφάνιση όλων</div>
+                <div id="chart-elo-button-active">Εμφάνιση μόνο ενεργών</div>
+                <div id="chart-elo-button-inactive">Εμφάνιση μόνο ανενεργών</div>
+            </div>
+
+            <div class="chart-elo-container">
+                <canvas id="chart-elo-per-player">Your browser does not support the canvas element.</canvas>
+            </div>
+
+            <div class="chart-elo-container">
+                <canvas id="chart-elo-per-player-per-match">Your browser does not support the canvas element.</canvas>
             </div>
         </div>
 

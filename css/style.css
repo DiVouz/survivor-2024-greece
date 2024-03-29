@@ -4,6 +4,8 @@
     --color-text: rgb(255, 255, 255);
 
     --color-main-0: rgb(22, 26, 48);
+    --color-main-0-opacity80: rgba(22, 26, 48, 0.8);
+    
     --color-main-1: rgb(49, 48, 77);
 
     --color-blue: rgb(0, 150, 255);
@@ -17,6 +19,10 @@
     --border-size: 0.25rem;
 
     --navbar-height: 8rem;
+
+    --chart-grid-color: rgba(255, 255, 255, 0.1);
+    --chart-scale-label-color: rgba(150, 150, 150);
+    --chart-scale-ticks-color: rgba(225, 225, 225);
 }
 
 *, *::before, *::after {
@@ -203,4 +209,39 @@ body {
 
 .section-footer a {
     color: var(--color-blue);
+}
+
+/* CHART */
+
+.chart-elo-buttons > div {
+    padding: var(--gap);
+    
+    border-radius: var(--border-radius);
+    background-color: var(--color-main-0);
+    box-shadow: var(--box-shadow);
+
+    cursor: pointer;
+
+    transition: 0.2s ease-in-out;
+}
+
+.chart-elo-buttons > div:hover {
+    box-shadow: none;
+    background-color: var(--color-main-0-opacity80);
+}
+
+.chart-elo-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 100rem;
+
+    height: 50rem;
+    max-height: 90svh;
+
+    padding: var(--gap);
+
+    background-color: var(--color-main-0);
+    border-radius: var(--border-size);
+    box-shadow: var(--box-shadow);
 }
